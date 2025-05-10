@@ -1,0 +1,530 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  :root {
+    --pink-lightest: #fff1f2;
+    --pink-light: #fecdd3;
+    --pink-medium: #fda4af;
+    --pink-dark: #fb7185;
+    --pink-darkest: #f43f5e;
+    --card-width: min(90vw, 600px);
+    --card-height: calc(var(--card-width) * 1.33); /* 4:3 aspect ratio */
+    --border-radius: 8px;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition-timing: cubic-bezier(0.645, 0.045, 0.355, 1);
+    --font-family: 'Noto Sans JP', sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-family);
+    color: #333;
+    background: linear-gradient(to right, var(--pink-lightest), #ffffff);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+    touch-action: manipulation; /* Improves touch behavior */
+    -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+  }
+  
+  .container {
+    width: 100%;
+    max-width: var(--card-width);
+    margin: 0 auto;
+  }
+  
+  /* Card container */
+  .card-container {
+    position: relative;
+    width: 100%;
+    height: var(--card-height);
+    perspective: 2000px;
+    margin: 0 auto;
+    transform-style: preserve-3d;
+  }
+  
+  /* Card cover (front) */
+  .card-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 2px solid var(--pink-light);
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1s var(--transition-timing);
+    z-index: 10;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .cover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    backface-visibility: hidden;
+  }
+  
+  
+  .tap-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.5; transform: scale(1); }
+  }
+  
+  /* Card inside */
+  .card-inside {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    z-index: 5;
+  }
+  
+  /* Card pages */
+  .card-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 2px solid var(--pink-light);
+    transform-style: preserve-3d;
+    transition: transform 0.8s var(--transition-timing), opacity 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .card-page.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 5;
+  }
+  
+  /* Card back cover */
+  .card-back-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 2px solid var(--pink-light);
+    z-index: 1;
+  }
+  
+  .back-cover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .heart-small {
+    font-size: 2rem;
+  }
+  
+  /* Page content */
+  .page-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  /* Card states */
+  .card-container.opened .card-cover {
+    transform: rotateY(-180deg);
+  }
+  
+  /* Typography */
+  .title {
+    font-family: var(--font-family);
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 700;
+    color: var(--pink-darkest);
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-family: var(--font-family);
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+    font-weight: 600;
+    color: var(--pink-darkest);
+    margin-bottom: 1.5rem;
+  }
+  
+  .large-title {
+    font-family: var(--font-family);
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    font-weight: 800;
+    color: #e11d48;
+    margin-bottom: 2rem;
+  }
+  
+  .text {
+    font-family: var(--font-family);
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    font-weight: 400;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  .highlight {
+    font-family: var(--font-family);
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+    font-weight: 500;
+    color: var(--pink-dark);
+  }
+  
+  /* Cover elements */
+  .cover-image {
+    width: 100%;
+    height: clamp(100px, 25vh, 160px);
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .dots {
+    display: flex;
+    gap: clamp(0.5rem, 2vw, 1rem);
+    margin-top: 1rem;
+  }
+  
+  .dot {
+    width: clamp(20px, 6vw, 40px);
+    height: clamp(20px, 6vw, 40px);
+    border-radius: 50%;
+  }
+  
+  .small-dot {
+    width: clamp(12px, 4vw, 24px);
+    height: clamp(12px, 4vw, 24px);
+    border-radius: 50%;
+  }
+  
+  .dots-row {
+    display: flex;
+    gap: clamp(0.25rem, 1vw, 0.5rem);
+    margin-bottom: 2rem;
+  }
+  
+  .pink-lightest { background-color: var(--pink-lightest); }
+  .pink-light { background-color: var(--pink-light); }
+  .pink-medium { background-color: var(--pink-medium); }
+  .pink-dark { background-color: var(--pink-dark); }
+  .pink-darkest { background-color: var(--pink-darkest); }
+  
+  /* Photos page - UPDATED for 2x2 grid with 1:1 ratio */
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-rows: repeat(2, 1fr); /* 2 rows */
+    gap: clamp(0.5rem, 2vw, 1rem);
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .photo-container {
+    width: 100%;
+    aspect-ratio: 1/1; /* 1:1 ratio */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 2px solid var(--pink-light);
+    position: relative;
+  }
+  
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  /* Single photo styling (replacing video container) */
+  .single-photo-container {
+    width: 80%;
+    aspect-ratio: 1/1; /* Perfect square (1:1 ratio) */
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 2px solid var(--pink-light);
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .single-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease;
+  }
+  
+  .single-photo:hover {
+    transform: scale(1.03);
+  }
+  
+  .photo-caption {
+    font-family: var(--font-family);
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    font-weight: 400;
+    color: var(--pink-dark);
+    margin-top: 1rem;
+    font-style: italic;
+  }
+  
+  /* Video page */
+  .video-container {
+    width: 100%;
+    height: clamp(200px, 50vh, 400px);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 2px solid var(--pink-light);
+    background-color: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .video-placeholder {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .placeholder-text {
+    font-family: var(--font-family);
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    font-size: clamp(0.875rem, 3vw, 1rem);
+  }
+  
+  .placeholder-subtext {
+    font-family: var(--font-family);
+    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+    color: #9ca3af;
+  }
+  
+  /* Message page */
+  .message-box {
+    background-color: var(--pink-lightest);
+    padding: clamp(0.75rem, 3vw, 1.5rem);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--pink-light);
+    width: 100%;
+  }
+  
+  .message-text {
+    font-family: var(--font-family);
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    color: #4b5563;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  
+  .signature {
+    margin-top: clamp(1rem, 4vw, 2rem);
+  }
+  
+  .signature-text {
+    font-family: var(--font-family);
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+    font-weight: 500;
+    color: var(--pink-dark);
+  }
+  
+  .signature-name {
+    font-family: var(--font-family);
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    color: #4b5563;
+    margin-top: 0.5rem;
+  }
+  
+  /* Heart container */
+  .heart-container {
+    width: clamp(80px, 20vw, 128px);
+    height: clamp(80px, 20vw, 128px);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  
+  .heart {
+    position: absolute;
+    inset: 0;
+    background-color: var(--pink-lightest);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+  
+  /* Navigation */
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: clamp(1rem, 4vw, 2rem);
+  }
+  
+  .nav-button {
+    width: clamp(36px, 10vw, 48px);
+    height: clamp(36px, 10vw, 48px);
+    border-radius: 50%;
+    background-color: var(--pink-lightest);
+    color: var(--pink-darkest);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    font-family: var(--font-family);
+  }
+  
+  .nav-button svg {
+    width: clamp(18px, 5vw, 24px);
+    height: clamp(18px, 5vw, 24px);
+  }
+  
+  .nav-button:hover {
+    background-color: var(--pink-light);
+  }
+  
+  .nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .page-indicators {
+    display: flex;
+    gap: clamp(0.25rem, 1vw, 0.5rem);
+  }
+  
+  .indicator {
+    width: clamp(8px, 2.5vw, 12px);
+    height: clamp(8px, 2.5vw, 12px);
+    border-radius: 50%;
+    background-color: var(--pink-light);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .indicator.active {
+    background-color: var(--pink-darkest);
+  }
+  
+  
+  .swipe-icon {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    margin-bottom: 0.5rem;
+  }
+  
+  @keyframes fade-in-out {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+ 
+    .page-content, .cover-content {
+      padding: 15px;
+    }
+    
+    /* Optimize for touch */
+    .nav-button {
+      min-width: 44px; /* Minimum touch target size */
+      min-height: 44px;
+    }
+    
+    /* Responsive adjustments for the single photo */
+    .single-photo-container {
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-content, .cover-content {
+      padding: 12px;
+    }
+    
+    /* Adjust card height for smaller screens */
+    :root {
+      --card-height: calc(var(--card-width) * 1.5); /* Taller aspect ratio for small screens */
+    }
+  }
+  
+  /* Landscape orientation adjustments */
+  @media (max-width: 900px) and (orientation: landscape) {
+    :root {
+      --card-width: min(80vw, 500px);
+      --card-height: calc(var(--card-width) * 0.8); /* Wider aspect ratio for landscape */
+    }
+    
+    .container {
+      padding: 10px;
+    }
+  }
+  
+  /* Fix for iOS Safari 100vh issue */
+  @supports (-webkit-touch-callout: none) {
+    .container {
+      min-height: -webkit-fill-available;
+    }
+  }
